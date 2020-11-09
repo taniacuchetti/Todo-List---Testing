@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import { useState } from 'react'
+import Input from './components/Input'
+import Button from './components/Button'
+import Tasks from './components/Tasks'
 import './App.css';
 
 function App() {
+
+  const [value, setValue] = useState('')
+  const [tasks, setTasks] = useState([])
+  
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+
+  function handleClick(){
+    if (value != "") {
+      setTasks((prevState) => [...prevState,value]);
+      setValue('')
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div>
+    <Input onChange={handleChange} value={value}/>
+    <Button onClick={handleClick} label="Agregar tarea"/>
     </div>
+    <div>
+      <Tasks tasks={tasks} />
+    </div>
+    </>
   );
 }
 
